@@ -57,181 +57,182 @@ class FeedScreen extends StatelessWidget {
       },
     );
   }
-  Widget buildPost(PostModel model,context,index) =>  Card(
-  clipBehavior: Clip.antiAliasWithSaveLayer,
-  elevation: 10,
-  margin: EdgeInsets.symmetric(horizontal: 8),
-  child: Padding(
-  padding: EdgeInsets.all(10),
-  child: Column(
 
-  children: [
-  Row(children: [
-  CircleAvatar(
-  backgroundImage: NetworkImage(
-  '${model.image}'),
-  radius: 30,
-  ),
-  SizedBox(
-  width: 10,
-  ),
-  Expanded(
-  child: Column(
-  crossAxisAlignment: CrossAxisAlignment.start,
-  children: [
-  Row(
-  children: [
-  Text(
-  '${model.name}',
-  style: TextStyle(height: 1),
-  ),SizedBox(
-  width: 5,
-  ),
-  Icon(
-  Icons.verified,
-  color: Colors.blue,
-  size: 15,
-  ),
-  SizedBox(height: 5,),
-  ],
-  ),
-  SizedBox(
-  height: 5,
-  ),
-  Text(
-  '${model.dateTime}',style: TextStyle(color: Colors.grey),
-  ),
-  ],
-
-  )
-  ),
-  IconButton(
-  onPressed: (){},
-  icon: Icon(Icons.more_horiz)
-  ),
-  ]),
-  Padding(
-  padding: EdgeInsets.symmetric(vertical: 10),
-  child: Container(
-  color: Colors.grey,
-  height: 1,
-  width: double.infinity,
-
-  ),
-  ),
-  Row
-    (mainAxisAlignment: MainAxisAlignment.start,
-    children: [
-      Text(
-      '${model.text}',
-      style: TextStyle(fontWeight: FontWeight.bold,height: 2,fontSize: 15),
-      ),
-    ],
-  ),
-  if(model.imagePost !='')
-    Container(
-  height: 150,
-  width: double.infinity,
-  decoration: BoxDecoration(
-  image: DecorationImage(
-  image: NetworkImage(
-  '${model.imagePost}'
-  )
-  )
-  ),
-  ),
-  Padding(
-  padding: EdgeInsets.symmetric(vertical: 5),
-  child: Row(
-  children: [
-  Expanded(
-  child: InkWell(
-  child: Padding(
-  padding: EdgeInsets.symmetric(vertical: 5),
-  child: Row(
-  children: [
-  Icon(
-  IconBroken.Heart,
-  size: 20,
-  color: Colors.red,
-  ),
-  SizedBox(
-  width: 5,
-  ),
-  Text(
-  '${SocialCubit.get(context).likes[index]}',
-  style: TextStyle(color: Colors.grey),
-  )
-  ],
-  ),
-  ),
-  onTap: (){},
-  ),
-  ),
-  Expanded(
-  child: InkWell(
-  child: Padding(
-  padding: EdgeInsets.symmetric(vertical: 5),
-  child: Row(
-  mainAxisAlignment: MainAxisAlignment.end,
-  children: [
-  Icon(
-  IconBroken.Chat,
-  size: 20,
-  color: Colors.red,
-  ),
-  SizedBox(
-  width: 5,
-  ),
-  Text(
-  '200',
-  style: TextStyle(color: Colors.grey),
-  )
-  ],
-  ),
-  ),
-  onTap: (){},
-  ),
-  ),
-  ],
-  ),
-  ),
-  Container(
-  height: 1,
-  color: Colors.grey,
-  ),
-  Row(
-  children: [
-  Expanded(
-    child: InkWell(
-      child: Row(
-        children: [
-          CircleAvatar(
-          backgroundImage: NetworkImage(
-          '${model.image}'),
-          radius: 15,
+  Widget buildPost(PostModel model, context, index) => Card(
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        elevation: 10,
+        margin: EdgeInsets.symmetric(horizontal: 8),
+        child: Padding(
+          padding: EdgeInsets.all(10),
+          child: Column(
+            children: [
+              Row(children: [
+                CircleAvatar(
+                  backgroundImage: NetworkImage('${model.image}'),
+                  radius: 30,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          '${model.name}',
+                          style: TextStyle(height: 1),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Icon(
+                          Icons.verified,
+                          color: Colors.blue,
+                          size: 15,
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      '${model.dateTime}',
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ],
+                )),
+                IconButton(onPressed: () {}, icon: Icon(Icons.more_horiz)),
+              ]),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: Container(
+                  color: Colors.grey,
+                  height: 1,
+                  width: double.infinity,
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    '${model.text}',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, height: 2, fontSize: 15),
+                  ),
+                ],
+              ),
+              if (model.imagePost != '')
+                Container(
+                  height: 150,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: NetworkImage('${model.imagePost}'))),
+                ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 5),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: InkWell(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 5),
+                          child: Row(
+                            children: [
+                              Icon(
+                                IconBroken.Heart,
+                                size: 20,
+                                color: Colors.red,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                '${SocialCubit.get(context).likes[index]}',
+                                style: TextStyle(color: Colors.grey),
+                              )
+                            ],
+                          ),
+                        ),
+                        onTap: () {},
+                      ),
+                    ),
+                    Expanded(
+                      child: InkWell(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 5),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Icon(
+                                IconBroken.Chat,
+                                size: 20,
+                                color: Colors.red,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                '200',
+                                style: TextStyle(color: Colors.grey),
+                              )
+                            ],
+                          ),
+                        ),
+                        onTap: () {},
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                height: 1,
+                color: Colors.grey,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: InkWell(
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            backgroundImage: NetworkImage('${model.image}'),
+                            radius: 15,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            'Write a comment ...',
+                            style: TextStyle(fontSize: 15, color: Colors.grey),
+                          ),
+                        ],
+                      ),
+                      onTap: () {},
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      IconBroken.Heart,
+                      color: Colors.red,
+                    ),
+                    onPressed: () {
+                      SocialCubit.get(context)
+                          .likePost(SocialCubit.get(context).postLike[index]);
+                    },
+                  )
+                ],
+              )
+            ],
           ),
-          SizedBox(
-          width: 5,
-          ),
-          Text(
-          'Write a comment ...',
-          style: TextStyle(fontSize: 15,color: Colors.grey),
-          ),
-
-        ],
-      ),onTap: (){},
-    ),
-  ),
-   SizedBox(width: 10,),
-   IconButton(icon:Icon(IconBroken.Heart,color: Colors.red,),
-     onPressed: () {
-     SocialCubit.get(context).likePost(SocialCubit.get(context).postLike[index]);
-     },)
-  ],
-  )
-  ],
-  ),
-  ),
-  );
+        ),
+      );
 }
