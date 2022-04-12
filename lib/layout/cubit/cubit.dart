@@ -247,6 +247,7 @@ class SocialCubit extends Cubit<SocialState>{
       name: model?.name,
       uId: model?.uId,
       image: model?.image,
+      bio: model?.bio,
       imagePost: imagePost??'',
       dateTime: dateTime,
       text: text,

@@ -3,6 +3,7 @@ import 'package:firebase/component/styel/iconbroken.dart';
 import 'package:firebase/layout/cubit/cubit.dart';
 import 'package:firebase/layout/cubit/states.dart';
 import 'package:firebase/model/add_post.dart';
+import 'package:firebase/modules/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -75,37 +76,42 @@ class FeedScreen extends StatelessWidget {
                   width: 10,
                 ),
                 Expanded(
-                    child: Column(
+                    child: InkWell(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile(model)));
+                      },
+                      child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Text(
-                          '${model.name}',
-                          style: TextStyle(height: 1),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Icon(
-                          Icons.verified,
-                          color: Colors.blue,
-                          size: 15,
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      '${model.dateTime}',
-                      style: TextStyle(color: Colors.grey),
-                    ),
+                      Row(
+                        children: [
+                          Text(
+                            '${model.name}',
+                            style: TextStyle(height: 1),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Icon(
+                            Icons.verified,
+                            color: Colors.blue,
+                            size: 15,
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        '${model.dateTime}',
+                        style: TextStyle(color: Colors.grey),
+                      ),
                   ],
-                )),
+                ),
+                    )),
                 IconButton(onPressed: () {}, icon: Icon(Icons.more_horiz)),
               ]),
               Padding(
