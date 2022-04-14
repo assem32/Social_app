@@ -3,6 +3,7 @@ import 'package:firebase/component/styel/iconbroken.dart';
 import 'package:firebase/layout/cubit/cubit.dart';
 import 'package:firebase/layout/cubit/states.dart';
 import 'package:firebase/model/add_post.dart';
+import 'package:firebase/modules/comment/commnet_screen.dart';
 import 'package:firebase/modules/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -144,53 +145,58 @@ class FeedScreen extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 5),
                 child: Row(
                   children: [
-                    Expanded(
-                      child: InkWell(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 5),
-                          child: Row(
-                            children: [
-                              Icon(
-                                IconBroken.Heart,
-                                size: 20,
-                                color: Colors.red,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                '${SocialCubit.get(context).likes[index]}',
-                                style: TextStyle(color: Colors.grey),
-                              )
-                            ],
+                    InkWell(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 5),
+                        child: Row(
+                          children: [
+                            IconButton(
+                            icon: Icon(
+                              IconBroken.Heart,
+                              color: Colors.red,
+                            ),
+                            onPressed: () {
+                              SocialCubit.get(context)
+                                  .likePost(SocialCubit.get(context).postId[index]);
+                            },
                           ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              '${SocialCubit.get(context).likes[index]}',
+                              style: TextStyle(color: Colors.grey),
+                            )
+                          ],
                         ),
-                        onTap: () {},
                       ),
+                      onTap: () {},
                     ),
                     Expanded(
-                      child: InkWell(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 5),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Icon(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconButton(
+                              onPressed: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>CommentScreen(SocialCubit.get(context).postId[index])));
+                              },
+                              icon: Icon(
                                 IconBroken.Chat,
                                 size: 20,
                                 color: Colors.red,
                               ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                '200',
-                                style: TextStyle(color: Colors.grey),
-                              )
-                            ],
-                          ),
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              '${SocialCubit.get(context).comments[index]}',
+                              style: TextStyle(color: Colors.grey),
+                            )
+                          ],
                         ),
-                        onTap: () {},
                       ),
                     ),
                   ],
@@ -200,43 +206,7 @@ class FeedScreen extends StatelessWidget {
                 height: 1,
                 color: Colors.grey,
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: InkWell(
-                      child: Row(
-                        children: [
-                          CircleAvatar(
-                            backgroundImage: NetworkImage('${model.image}'),
-                            radius: 15,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            'Write a comment ...',
-                            style: TextStyle(fontSize: 15, color: Colors.grey),
-                          ),
-                        ],
-                      ),
-                      onTap: () {},
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      IconBroken.Heart,
-                      color: Colors.red,
-                    ),
-                    onPressed: () {
-                      SocialCubit.get(context)
-                          .likePost(SocialCubit.get(context).postLike[index]);
-                    },
-                  )
-                ],
-              )
+
             ],
           ),
         ),

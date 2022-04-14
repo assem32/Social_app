@@ -97,5 +97,12 @@ class SendMassageSuccessState extends SocialState{}
 
 class SendMassageErrorState extends SocialState{}
 
+
 class GetMassageSuccessState extends SocialState{}
+
+class CreateCommentSuccessState extends SocialState{}
+
+class CreateCommentErrorState extends SocialState{}
+
+class GetCommentSuccessState extends SocialState{}
 
