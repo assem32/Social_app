@@ -8,6 +8,7 @@ import 'package:firebase/model/social_model.dart';
 import 'package:firebase/modules/add_post/add_post.dart';
 import 'package:firebase/modules/chats/chat_screen.dart';
 import 'package:firebase/modules/feeds/feed_screen.dart';
+import 'package:firebase/modules/search_screen/search.dart';
 import 'package:firebase/modules/settings/setting_screen.dart';
 import 'package:firebase/modules/users/user_screen.dart';
 import 'package:firebase/network/local/cache_helper.dart';
@@ -38,17 +39,15 @@ class SocialCubit extends Cubit<SocialState>{
   int currentIndex=0;
   List<Widget> screen=[
     FeedScreen(),
-    ChatScreen(),
+    SearchScreen(),
     AddPost(),
-    UserScreen(),
     SettingsScreen(),
   ];
   List<String> title=[
     'Home',
-    'Chat',
+    'Search',
     'add',
-    'User',
-    'Settings',
+    'Profile',
   ];
   void changeNav(int index){
     if(index==1)
@@ -431,5 +430,29 @@ class SocialCubit extends Cubit<SocialState>{
 
         emit(GetCommentSuccessState());
       });
+    }
+
+    List<PostModel> userData=[];
+    void profilePost(String userId){
+      FirebaseFirestore.instance
+          .collection('post').orderBy('dateTime').snapshots().listen((event) {
+            userData=[];
+            event.docs.forEach((element) {
+              if(element.data()['uId']==userId)
+                userData.add(PostModel.fromJson(element.data()));
+            });
+            emit(GetProfileSuccessState());
+      });
+    }
+    
+    List<SocialModel>SearchUser=[];
+    void searchUser(String name){
+      FirebaseFirestore.instance.collection('user').get().then((value) {
+        value.docs.forEach((element) {
+          if(element.data()['name']==name)
+            SearchUser.add(SocialModel.fromJson(element.data()));
+          emit(GetSearchSuccessState());
+        });
+      }).catchError((error){});
     }
 }

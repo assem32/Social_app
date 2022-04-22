@@ -16,24 +16,29 @@ class ChatScreen extends StatelessWidget {
         listener:(context, state) {
         } ,
         builder: (context,state){
-          return ConditionalBuilder(
-            condition: SocialCubit.get(context).users.length>0,
-            builder:(context)=> Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: ListView.separated(
-                physics: BouncingScrollPhysics(),
-                  itemBuilder: (context,index)=>buildChatItem(SocialCubit.get(context).users[index],context),
-                  separatorBuilder: (context,index)=>Container(
-                height: 1,
-                color: Colors.grey,
+          return Scaffold(
+            appBar: AppBar(
 
-              ), itemCount: SocialCubit.get(context).users.length
-             ),
             ),
-            fallback:(context)=> Center(
-              child: Text(
-                  'No other users',
-                style: TextStyle(fontWeight: FontWeight.bold,),
+            body: ConditionalBuilder(
+              condition: SocialCubit.get(context).users.length>0,
+              builder:(context)=> Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: ListView.separated(
+                  physics: BouncingScrollPhysics(),
+                    itemBuilder: (context,index)=>buildChatItem(SocialCubit.get(context).users[index],context),
+                    separatorBuilder: (context,index)=>Container(
+                  height: 1,
+                  color: Colors.grey,
+
+                ), itemCount: SocialCubit.get(context).users.length
+               ),
+              ),
+              fallback:(context)=> Center(
+                child: Text(
+                    'No other users',
+                  style: TextStyle(fontWeight: FontWeight.bold,),
+                ),
               ),
             ),
           );

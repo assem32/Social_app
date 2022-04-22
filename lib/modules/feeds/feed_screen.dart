@@ -180,7 +180,7 @@ class FeedScreen extends StatelessWidget {
                           children: [
                             IconButton(
                               onPressed: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>CommentScreen(SocialCubit.get(context).postId[index])));
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>CommentScreen(SocialCubit.get(context).postId[index],)));
                               },
                               icon: Icon(
                                 IconBroken.Chat,

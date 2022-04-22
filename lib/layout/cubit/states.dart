@@ -106,3 +106,8 @@ class CreateCommentErrorState extends SocialState{}
 
 class GetCommentSuccessState extends SocialState{}
 
+class GetProfileSuccessState extends SocialState{}
+
+class GetSearchSuccessState extends SocialState{}
+
+

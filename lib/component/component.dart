@@ -1,4 +1,8 @@
 import 'package:firebase/component/styel/iconbroken.dart';
+import 'package:firebase/model/add_post.dart';
+import 'package:firebase/model/comment.dart';
+import 'package:firebase/model/social_model.dart';
+import 'package:firebase/modules/profile/profile.dart';
 import 'package:flutter/material.dart';
 
 Widget defaultButton({
@@ -77,3 +81,51 @@ Widget defaultAppBar({
   title: Text(title!),
   actions: action,
 );
+
+Widget buildComment(CommentModel model) => Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CircleAvatar(
+            radius: 25, backgroundImage: NetworkImage('${model.image}')),
+        SizedBox(
+          width: 5,
+        ),
+        Text(
+          '${model.name}',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        Expanded(
+          child: Text(
+            '${model.text}',
+          ),
+        )
+      ],
+    );
+
+Widget buildProfileImage(PostModel image) => Container(
+      child: Image(
+        fit: BoxFit.cover,
+        image: NetworkImage(
+          '${image.imagePost}'
+      ),
+    ));
+
+Widget searchItem(SocialModel searchModel,context) => InkWell(
+  onTap: (){
+    Navigator.push(context,MaterialPageRoute(builder: (context)=>Profile(searchModel)) );
+  },
+      child: Row(
+        children: [
+          CircleAvatar(
+            backgroundImage: NetworkImage('${searchModel.image}'),
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Text('${searchModel.name}')
+        ],
+      ),
+    );

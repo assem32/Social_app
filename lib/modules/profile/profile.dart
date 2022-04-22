@@ -1,3 +1,4 @@
+import 'package:firebase/component/component.dart';
 import 'package:firebase/layout/cubit/cubit.dart';
 import 'package:firebase/layout/cubit/states.dart';
 import 'package:firebase/model/add_post.dart';
@@ -6,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Profile extends StatelessWidget {
 
-  PostModel ?profileModel;
+  dynamic profileModel;
   Profile(this.profileModel);
 
   @override
@@ -14,7 +15,7 @@ class Profile extends StatelessWidget {
     return BlocConsumer<SocialCubit,SocialState>(
       listener: (context,state){},
       builder: (context,state){
-
+        SocialCubit.get(context).profilePost(profileModel.uId);
         return Scaffold(
           appBar: AppBar(
 
@@ -72,18 +73,7 @@ class Profile extends StatelessWidget {
                         child: Column(
                           children: [
                             Text('Posts'),
-                            Text('100',
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                          ],
-                        ),
-                      )),
-                      Expanded(child: InkWell(
-                        onTap: (){},
-                        child: Column(
-                          children: [
-                            Text('Posts'),
-                            Text('100',
+                            Text('${SocialCubit.get(context).userData.length}',
                               style: TextStyle(color: Colors.grey),
                             ),
                           ],
@@ -130,6 +120,18 @@ class Profile extends StatelessWidget {
                     ),
                   ],
                 ),
+                Expanded(
+                  child: GridView.builder(
+                    shrinkWrap: true,
+                    itemCount: SocialCubit.get(context).userData.length,
+                    itemBuilder: (context,index)=>buildProfileImage(SocialCubit.get(context).userData[index]),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              crossAxisSpacing: 5,
+                              mainAxisSpacing: 1.5,
+                              childAspectRatio: 1)),
+                )
               ],
             ),
           ),

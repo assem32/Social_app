@@ -3,6 +3,7 @@ import 'package:firebase/component/styel/iconbroken.dart';
 import 'package:firebase/layout/cubit/cubit.dart';
 import 'package:firebase/layout/cubit/states.dart';
 import 'package:firebase/modules/add_post/add_post.dart';
+import 'package:firebase/modules/chats/chat_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,8 +30,9 @@ class SocialLayout extends StatelessWidget {
               backgroundColor: Colors.white,
               title: Text(SocialCubit.get(context).title[SocialCubit.get(context).currentIndex]),
               actions: [
-                IconButton(onPressed: (){}, icon: Icon(IconBroken.Notification)),
-                IconButton(onPressed: (){}, icon: Icon(IconBroken.Search)),
+                IconButton(onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatScreen()));
+                }, icon: Icon(IconBroken.Chat)),
               ],
             ),
             body: SocialCubit.get(context).screen[SocialCubit.get(context).currentIndex],
@@ -45,20 +47,16 @@ class SocialLayout extends StatelessWidget {
                   label: 'Home'
               ),
               BottomNavigationBarItem(
-                  icon: Icon(IconBroken.Chat),
-                  label: 'Chat'
+                  icon: Icon(IconBroken.Search),
+                  label: 'Search'
               ),
               BottomNavigationBarItem(
                   icon: Icon(IconBroken.Paper_Upload),
                   label: 'Add post'
               ),
               BottomNavigationBarItem(
-                  icon: Icon(IconBroken.Location),
-                  label: 'Users'
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(IconBroken.Setting),
-                label: 'Settings',
+                icon: Icon(IconBroken.Profile),
+                label: 'Profile',
               ),
             ],
             ),
