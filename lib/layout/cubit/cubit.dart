@@ -433,7 +433,7 @@ class SocialCubit extends Cubit<SocialState>{
     }
 
     List<PostModel> userData=[];
-    void profilePost(String userId){
+    void profilePost(String ?userId){
       FirebaseFirestore.instance
           .collection('post').orderBy('dateTime').snapshots().listen((event) {
             userData=[];

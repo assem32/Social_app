@@ -3,6 +3,7 @@ import 'package:firebase/component/styel/iconbroken.dart';
 import 'package:firebase/edit_profile/edit_profile.dart';
 import 'package:firebase/layout/cubit/cubit.dart';
 import 'package:firebase/layout/cubit/states.dart';
+import 'package:firebase/model/social_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,6 +16,7 @@ class SettingsScreen extends StatelessWidget {
       listener: (context,state){},
       builder: (context,state){
         var userModel= SocialCubit.get(context).model;
+        SocialCubit.get(context).profilePost(SocialCubit.get(context).model?.uId);
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -139,6 +141,18 @@ class SettingsScreen extends StatelessWidget {
                   )),
                 ],
               ),
+              Expanded(
+                child: GridView.builder(
+                    shrinkWrap: true,
+                    itemCount: SocialCubit.get(context).userData.length,
+                    itemBuilder: (context,index)=>buildProfileImage(SocialCubit.get(context).userData[index]),
+                    gridDelegate:
+                    const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 5,
+                        mainAxisSpacing: 1.5,
+                        childAspectRatio: 1)),
+              )
             ],
           ),
         );
