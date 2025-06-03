@@ -1,4 +1,3 @@
-import 'package:firebase/component/component.dart';
 import 'package:firebase/component/styel/iconbroken.dart';
 import 'package:firebase/layout/cubit/cubit.dart';
 import 'package:firebase/layout/cubit/states.dart';

@@ -3,8 +3,8 @@ abstract class SocialLoginStates{}
 class SocialInitialLoginState extends SocialLoginStates{}
 
 class SocialSuccessLoginState extends SocialLoginStates{
-  final String uId;
-  SocialSuccessLoginState(this.uId);
+  // final String uId;
+  // SocialSuccessLoginState(this.uId);
 }
 
 class SocialErrorLoginState extends SocialLoginStates{

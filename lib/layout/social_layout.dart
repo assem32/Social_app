@@ -1,10 +1,8 @@
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:firebase/component/styel/iconbroken.dart';
 import 'package:firebase/layout/cubit/cubit.dart';
 import 'package:firebase/layout/cubit/states.dart';
 import 'package:firebase/modules/add_post/add_post.dart';
 import 'package:firebase/modules/chats/chat_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
