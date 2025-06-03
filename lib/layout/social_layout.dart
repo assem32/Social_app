@@ -29,8 +29,8 @@ class SocialLayout extends StatelessWidget {
               title: Text(SocialCubit.get(context).title[SocialCubit.get(context).currentIndex]),
               actions: [
                 IconButton(onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatScreen()));
-                }, icon: Icon(IconBroken.Chat)),
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const ChatScreen()));
+                }, icon: const Icon(IconBroken.Chat)),
               ],
             ),
             body: SocialCubit.get(context).screen[SocialCubit.get(context).currentIndex],
@@ -39,7 +39,7 @@ class SocialLayout extends StatelessWidget {
               onTap: (index){
                 SocialCubit.get(context).
                 changeNav(index);
-              }, items: [
+              }, items: const [
               BottomNavigationBarItem(
                   icon:  Icon(IconBroken.Home),
                   label: 'Home'
@@ -65,44 +65,3 @@ class SocialLayout extends StatelessWidget {
 
   }
 }
-// Container(
-// // height: 40,
-// color: Colors.grey.withOpacity(0.6),
-// child: Padding(
-// padding: const EdgeInsets.symmetric(horizontal: 20.0),
-// child: Row(
-// children: [
-// Icon(Icons.info_outline),
-// SizedBox(width: 10,),
-// Expanded(child: Text('Please verify your email')),
-// SizedBox(
-// width: 20,
-// ),
-// TextButton(onPressed: () {
-// FirebaseAuth.instance.currentUser!
-//     .sendEmailVerification()
-//     .then((value){
-// print('success');
-// }).catchError((error)
-// {
-// print(error);
-// });
-// }, child: Text('send')),
-// ],
-// ),
-// ),
-// )
-//ConditionalBuilder(
-//   condition: SocialCubit.get(context).model !=null,
-//   builder: (context){
-//     //var model=FirebaseAuth.instance.currentUser!.emailVerified;
-//     return Column(
-//       children: [
-//
-//       ]
-//
-//
-//     );
-//   }
-//   ,fallback: (context)=> Center(child :CircularProgressIndicator()),
-// )

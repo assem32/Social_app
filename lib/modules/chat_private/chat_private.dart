@@ -1,15 +1,15 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:firebase/auth/data/model/UserModel.dart';
 import 'package:firebase/component/styel/iconbroken.dart';
 import 'package:firebase/layout/cubit/cubit.dart';
 import 'package:firebase/layout/cubit/states.dart';
 import 'package:firebase/model/message_model.dart';
-import 'package:firebase/model/social_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 TextEditingController messageController=TextEditingController();
 
 class ChatPrivate extends StatelessWidget {
-  SocialModel ?umodel;
+  UserModel ?umodel;
 
   ChatPrivate({this.umodel});
 

@@ -3,7 +3,7 @@ import 'package:firebase/component/styel/iconbroken.dart';
 import 'package:firebase/edit_profile/edit_profile.dart';
 import 'package:firebase/layout/cubit/cubit.dart';
 import 'package:firebase/layout/cubit/states.dart';
-import 'package:firebase/model/social_model.dart';
+import 'package:firebase/auth/data/model/UserModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

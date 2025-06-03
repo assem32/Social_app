@@ -1,7 +1,7 @@
 import 'package:firebase/component/component.dart';
 import 'package:firebase/layout/cubit/cubit.dart';
 import 'package:firebase/layout/cubit/states.dart';
-import 'package:firebase/model/add_post.dart';
+import 'package:firebase/feed/data/model/PostModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

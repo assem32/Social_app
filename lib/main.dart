@@ -1,3 +1,6 @@
+import 'package:firebase/feed/data/FeedRepo.dart';
+import 'package:firebase/feed/data/remote/FeedRemote.dart';
+import 'package:firebase/feed/presentation/cubit/FeedCubit.dart';
 import 'package:firebase/layout/cubit/cubit.dart';
 import 'package:firebase/layout/cubit/states.dart';
 import 'package:firebase/layout/social_layout.dart';
@@ -9,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'auth/presentation/login/social_login_screen.dart';
 
-Future<void> firebaseMessagingBackgroundHnadler(RemoteMessage message)async{
+Future<void> firebaseMessagingBackgroundHnadler(RemoteMessage message) async {
   print(message.data.toString());
 }
 
@@ -19,7 +22,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
   Widget widget;
   uId = CacheHelper.getData(key: 'uId');
-  var token= await FirebaseMessaging.instance.getToken();
+  var token = await FirebaseMessaging.instance.getToken();
   print('token ${token}');
 
   FirebaseMessaging.onMessage.listen((event) {
@@ -40,41 +43,39 @@ Future<void> main() async {
 
 class FireBase extends StatelessWidget {
   //const FireBase({Key? key}) : super(key: key);
-  final Widget ?startWidget;
-  FireBase({ this.startWidget});
+  final Widget? startWidget;
+  FireBase({this.startWidget});
 
   @override
   Widget build(BuildContext context) {
-   return MultiBlocProvider(
+    return MultiBlocProvider(
         providers: [
           BlocProvider(
-              create: (BuildContext context) => SocialCubit()..getUserData()..currentIndex..getPost()..getUserDataChat()),
-          // BlocProvider(
-          //     create: (BuildContext context)=>
-          // )
+              create: (BuildContext context) => SocialCubit()
+                ..getUserData()
+                ..currentIndex
+                ..getUserDataChat()),
+          BlocProvider(
+            create: (BuildContext context) =>
+                FeedCubit(FeedRepo(FeedRemote()))..getPost(),
+          )
         ],
         child: BlocConsumer<SocialCubit, SocialState>(
           listener: (context, state) {},
           builder: (context, state) {
             return MaterialApp(
               theme: ThemeData(
-                appBarTheme: AppBarTheme(
-                  elevation: 0,
-                  backgroundColor: Colors.white,
-                  titleTextStyle: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold
-                  ),
-                  iconTheme: IconThemeData(
-                    color: Colors.black
-                  )
-                ),
-                bottomNavigationBarTheme: BottomNavigationBarThemeData(
-                  type: BottomNavigationBarType.fixed,
-                  selectedItemColor: Colors.blue
-                )
-              ),
+                  appBarTheme: AppBarTheme(
+                      elevation: 0,
+                      backgroundColor: Colors.white,
+                      titleTextStyle: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                      iconTheme: IconThemeData(color: Colors.black)),
+                  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+                      type: BottomNavigationBarType.fixed,
+                      selectedItemColor: Colors.blue)),
               debugShowCheckedModeBanner: false,
               home: startWidget,
             );

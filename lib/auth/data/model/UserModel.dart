@@ -1,4 +1,5 @@
-class SocialModel{
+
+class UserModel{
     String ?name;
     String ? mail;
     String ?uId;
@@ -7,7 +8,7 @@ class SocialModel{
    String ? bio;
    String ?cover;
     bool ?isMailVer;
-   SocialModel({
+   UserModel({
      this.name,
      this.mail,
      this.uId,
@@ -18,7 +19,7 @@ class SocialModel{
      this.isMailVer,
 
 });
-    SocialModel.fromJson(Map<String,dynamic>? json){
+    UserModel.fromJson(Map<String,dynamic>? json){
       mail = json!['mail'];
       name=json['name'];
       uId=json['uId'];

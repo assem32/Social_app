@@ -1,7 +1,7 @@
+import 'package:firebase/auth/data/model/UserModel.dart';
 import 'package:firebase/component/styel/iconbroken.dart';
-import 'package:firebase/model/add_post.dart';
-import 'package:firebase/model/comment.dart';
-import 'package:firebase/model/social_model.dart';
+import 'package:firebase/feed/data/model/PostModel.dart';
+import 'package:firebase/feed/data/model/Commet.dart';
 import 'package:firebase/modules/profile/profile.dart';
 import 'package:flutter/material.dart';
 
@@ -113,7 +113,7 @@ Widget buildProfileImage(PostModel image) => Container(
       ),
     ));
 
-Widget searchItem(SocialModel searchModel,context) => InkWell(
+Widget searchItem(UserModel searchModel,context) => InkWell(
   onTap: (){
     Navigator.push(context,MaterialPageRoute(builder: (context)=>Profile(searchModel)) );
   },

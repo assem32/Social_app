@@ -1,7 +1,9 @@
 import 'package:firebase/component/component.dart';
+import 'package:firebase/feed/presentation/cubit/FeedCubit.dart';
+import 'package:firebase/feed/presentation/cubit/FeedStates.dart';
 import 'package:firebase/layout/cubit/cubit.dart';
 import 'package:firebase/layout/cubit/states.dart';
-import 'package:firebase/model/comment.dart';
+import 'package:firebase/feed/data/model/Commet.dart';
 import 'package:firebase/modules/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,20 +11,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 var commentController = TextEditingController();
 
 class CommentScreen extends StatelessWidget {
-  String postId;
-
-   CommentScreen(this.postId,);
+  final String postId;
+  const CommentScreen(this.postId, {super.key});
 
   @override
   Widget build(BuildContext context) {
 
-    return BlocConsumer<SocialCubit,SocialState>(
+    return BlocConsumer<FeedCubit,FeedState>(
       listener: (context,state){
 
       },
       builder: (context,state){
-        SocialCubit.get(context).getComments(postId);
-        List<CommentModel> model=SocialCubit.get(context).getcomment;
+        FeedCubit.get(context).getComments(postId);
+        
         return Scaffold(
           appBar: AppBar(),
           body: Padding(
@@ -31,11 +32,11 @@ class CommentScreen extends StatelessWidget {
               children: [
                 Expanded(
                     child: ListView.separated(
-                        itemBuilder: (context, index) => InkWell(child: buildComment(model[index]),onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile(model[index])));},),
+                        itemBuilder: (context, index) => InkWell(child: buildComment(FeedCubit.get(context).comment[index]),onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile(FeedCubit.get(context).comment[index].uId)));},),
                         separatorBuilder: (context, index) => SizedBox(
                           height: 10,
                         ),
-                        itemCount: SocialCubit.get(context).getcomment.length)),
+                        itemCount: FeedCubit.get(context).comment.length)),
                 Row(
                   children: [
                     Expanded(
@@ -49,7 +50,7 @@ class CommentScreen extends StatelessWidget {
                       ),
                     ),
                     TextButton(onPressed: () {
-                      SocialCubit.get(context).createComment(commentController.text, postId);
+                      FeedCubit.get(context).createComment(commentController.text, postId);
                       commentController.clear();
                     }, child: Text('Post'))
                   ],

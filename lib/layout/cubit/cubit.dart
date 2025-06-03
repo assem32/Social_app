@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/auth/data/model/UserModel.dart';
 import 'package:firebase/layout/cubit/states.dart';
-import 'package:firebase/model/add_post.dart';
-import 'package:firebase/model/comment.dart';
+import 'package:firebase/feed/data/model/PostModel.dart';
+import 'package:firebase/feed/data/model/Commet.dart';
 import 'package:firebase/model/message_model.dart';
-import 'package:firebase/model/social_model.dart';
 import 'package:firebase/modules/add_post/add_post.dart';
-import 'package:firebase/modules/feeds/feed_screen.dart';
+import 'package:firebase/feed/presentation/feed_screen.dart';
 import 'package:firebase/modules/search_screen/search.dart';
 import 'package:firebase/modules/settings/setting_screen.dart';
 import 'package:firebase/network/local/cache_helper.dart';
@@ -18,7 +18,7 @@ import 'package:firebase_storage/firebase_storage.dart'as firebase_storage;
 class SocialCubit extends Cubit<SocialState>{
   SocialCubit():super (SocialInitialize());
   static SocialCubit get(context)=> BlocProvider.of(context);
-  SocialModel ?model;
+  UserModel ?model;
   void getUserData(){
     emit(SocialLoading());
     FirebaseFirestore.instance.collection('user')
@@ -26,7 +26,7 @@ class SocialCubit extends Cubit<SocialState>{
         .get()
         .then((value ){
           print(value.data());
-          model= SocialModel.fromJson(value.data());
+          model= UserModel.fromJson(value.data());
           emit(SocialSuccess());
     } ).catchError((error){
       print(error.toString());
@@ -183,7 +183,7 @@ class SocialCubit extends Cubit<SocialState>{
     String ?cover,
     String ?profile,
 }){
-    SocialModel umodel =SocialModel(
+    UserModel umodel =UserModel(
         name: name,
         phone: phone,
         bio: bio,
@@ -264,33 +264,7 @@ class SocialCubit extends Cubit<SocialState>{
   List<int>likes=[];
   List<int>comments=[];
 
-  void getPost(){
-    FirebaseFirestore.instance.collection('post').get().then((value){
 
-
-      // value.docs.forEach((element) {
-      //   element.reference.collection('comments').get().then((value){
-      //     comments.add(element.id);
-      //   }).catchError(onError);
-      // });
-      value.docs.forEach((element) {
-        element.reference.collection('comments').get().then((value){
-          comments.add(value.docs.length);
-        });
-        element.reference.collection('likes').get().then((value){
-          likes.add(value.docs.length);
-        postId.add(element.id);//to get post id
-        post.add(PostModel.fromJson(element.data()));
-          emit(GetUserPostSuccessState());
-        }).catchError((error){
-        });
-      });
-      emit(GetUserPostSuccessState());
-    }).catchError((error){
-      emit(GetUserPostErrorState(error.toString()));
-      print(error.toString());
-    });
-  }
 
   void likePost(String postId){
     FirebaseFirestore
@@ -317,7 +291,7 @@ class SocialCubit extends Cubit<SocialState>{
   // }
 
 //users chat
-  List<SocialModel> users=[];
+  List<UserModel> users=[];
   void getUserDataChat(){
     emit(GetUsersChatLoadingState());
     if(users.length==0)
@@ -326,7 +300,7 @@ class SocialCubit extends Cubit<SocialState>{
         .then((value ){
       value.docs.forEach((element) {
         if(element.data()['uId']!=model!.uId)
-          users.add(SocialModel.fromJson(element.data()));
+          users.add(UserModel.fromJson(element.data()));
       });
       emit(GetUsersChatSuccessState());
     } ).catchError((error){
@@ -412,23 +386,7 @@ class SocialCubit extends Cubit<SocialState>{
 
     }
 
-    List<CommentModel> getcomment=[];
-    void getComments(String postId){
-      FirebaseFirestore.instance
-          .collection('post')
-          .doc(postId)
-          .collection('comments')
-          .snapshots()
-          .listen((event) {
-         getcomment = [];
-
-        event.docs.forEach((element) {
-          getcomment.add(CommentModel.fromJson(element.data()));
-        });
-
-        emit(GetCommentSuccessState());
-      });
-    }
+    
 
     List<PostModel> userData=[];
     void profilePost(String ?userId){
@@ -443,12 +401,12 @@ class SocialCubit extends Cubit<SocialState>{
       });
     }
     
-    List<SocialModel>SearchUser=[];
+    List<UserModel>SearchUser=[];
     void searchUser(String name){
       FirebaseFirestore.instance.collection('user').get().then((value) {
         value.docs.forEach((element) {
           if(element.data()['name']==name)
-            SearchUser.add(SocialModel.fromJson(element.data()));
+            SearchUser.add(UserModel.fromJson(element.data()));
           emit(GetSearchSuccessState());
         });
       }).catchError((error){});
