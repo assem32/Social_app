@@ -1,9 +1,6 @@
 import 'package:firebase/component/component.dart';
 import 'package:firebase/feed/presentation/cubit/FeedCubit.dart';
 import 'package:firebase/feed/presentation/cubit/FeedStates.dart';
-import 'package:firebase/layout/cubit/cubit.dart';
-import 'package:firebase/layout/cubit/states.dart';
-import 'package:firebase/feed/data/model/Commet.dart';
 import 'package:firebase/modules/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
