@@ -2,11 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase/auth/data/model/UserModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+String id='';
+
 class AuthRemote {
+  
   Future<UserModel> loginUser(String email, String password) async {
     var userCred = await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password);
-    var id = userCred.user?.uid;
+     id = userCred.user!.uid;
     var userData =
         await FirebaseFirestore.instance.collection('user').doc(id).get();
     return UserModel.fromJson(userData.data());
