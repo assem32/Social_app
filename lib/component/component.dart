@@ -2,7 +2,7 @@ import 'package:firebase/auth/data/model/UserModel.dart';
 import 'package:firebase/component/styel/iconbroken.dart';
 import 'package:firebase/feed/data/model/PostModel.dart';
 import 'package:firebase/feed/data/model/Commet.dart';
-import 'package:firebase/modules/profile/profile.dart';
+import 'package:firebase/personalProfile/profile/profile.dart';
 import 'package:flutter/material.dart';
 
 Widget defaultButton({

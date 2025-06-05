@@ -1,6 +1,6 @@
 import 'package:firebase/component/component.dart';
 import 'package:firebase/component/styel/iconbroken.dart';
-import 'package:firebase/edit_profile/edit_profile.dart';
+import 'package:firebase/personalProfile/edit_profile/edit_profile.dart';
 import 'package:firebase/layout/cubit/cubit.dart';
 import 'package:firebase/layout/cubit/states.dart';
 import 'package:firebase/auth/data/model/UserModel.dart';
