@@ -1,7 +1,6 @@
 import 'package:firebase/component/component.dart';
 import 'package:firebase/layout/cubit/cubit.dart';
 import 'package:firebase/layout/cubit/states.dart';
-import 'package:firebase/feed/data/model/PostModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,6 +11,7 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return BlocConsumer<SocialCubit,SocialState>(
       listener: (context,state){},
       builder: (context,state){

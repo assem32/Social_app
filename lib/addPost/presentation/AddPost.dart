@@ -7,7 +7,6 @@ import 'package:firebase/addPost/presentation/cubit/AddPostsCubit.dart';
 import 'package:firebase/addPost/presentation/cubit/AddPostsStates.dart';
 import 'package:firebase/auth/data/model/UserModel.dart';
 import 'package:firebase/component/styel/iconbroken.dart';
-import 'package:firebase/layout/cubit/cubit.dart';
 import 'package:firebase/layout/cubit/states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,11 +14,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 File? path;
 
 class AddPost extends StatelessWidget {
-  // const AddPost({Key? key}) : super(key: key);
-  var textController = TextEditingController();
+  const AddPost({Key? key}) : super(key: key);
+  
 
   @override
   Widget build(BuildContext context) {
+    var textController = TextEditingController();
     return BlocProvider(
       create: (BuildContext context) =>
           AddPostsCubit(AddPostRepo(AddPostLocal(), AddPostsRemote())),
@@ -39,7 +39,6 @@ class AddPost extends StatelessWidget {
                   TextButton(
                     onPressed: () {
                       var now = DateTime.now();
-                      var repo = AddPostRepo(AddPostLocal(), AddPostsRemote());
                       UserModel userModel = UserModel(
                         name: "assem a",
                         phone: "444",

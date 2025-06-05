@@ -8,7 +8,7 @@ import 'package:firebase/model/message_model.dart';
 import 'package:firebase/addPost/presentation/AddPost.dart';
 import 'package:firebase/feed/presentation/feed_screen.dart';
 import 'package:firebase/modules/search_screen/search.dart';
-import 'package:firebase/modules/settings/setting_screen.dart';
+import 'package:firebase/personalProfile/personalProfilePresentation/PersonalProfile.dart';
 import 'package:firebase/network/local/cache_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
