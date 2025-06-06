@@ -64,7 +64,7 @@ class FireBase extends StatelessWidget {
           builder: (context, state) {
             return MaterialApp(
               theme: ThemeData(
-                  appBarTheme: AppBarTheme(
+                  appBarTheme: const AppBarTheme(
                       elevation: 0,
                       backgroundColor: Colors.white,
                       titleTextStyle: TextStyle(
@@ -72,7 +72,7 @@ class FireBase extends StatelessWidget {
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
                       iconTheme: IconThemeData(color: Colors.black)),
-                  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+                  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
                       type: BottomNavigationBarType.fixed,
                       selectedItemColor: Colors.blue)),
               debugShowCheckedModeBanner: false,

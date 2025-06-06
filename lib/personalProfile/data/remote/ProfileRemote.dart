@@ -26,4 +26,16 @@ class ProfileRemote {
         return userData;
 
   }
+
+  Future<UserModel> updateUser(
+   UserModel userModel
+)async{
+  UserModel? model;
+    await FirebaseFirestore.instance.collection('user').doc(userModel.uId).update(userModel.toMap()).then((value)async{
+      model= await getUserData(userModel.uId!);
+    }).catchError((error){
+      print(error.toString());
+    });
+    return model!;
+  }
 }
