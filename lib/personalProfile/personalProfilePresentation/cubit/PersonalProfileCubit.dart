@@ -1,5 +1,6 @@
 import 'package:firebase/auth/data/model/UserModel.dart';
 import 'package:firebase/auth/data/remote/AuthRemote.dart';
+import 'package:firebase/utils/StaticValues.dart';
 import 'package:firebase/feed/data/model/PostModel.dart';
 import 'package:firebase/personalProfile/data/ProfileRepo.dart';
 import 'package:firebase/personalProfile/personalProfilePresentation/cubit/PersonalProfileState.dart';
@@ -11,9 +12,9 @@ class PersonalProfileCubit extends Cubit<PersonalProfileState> {
   static PersonalProfileCubit get(context) => BlocProvider.of(context);
 
 
-  UserModel? userModel;
+ 
   void getProfileData()async{
-    userModel = await repo.getUserData(id);
+    StaticValues.userModel = await repo.getUserData(id);
     emit(PersonalDataGetSuccess());
   }
 

@@ -1,4 +1,5 @@
 import 'package:firebase/component/styel/iconbroken.dart';
+import 'package:firebase/utils/StaticValues.dart';
 import 'package:firebase/personalProfile/data/ProfileRepo.dart';
 import 'package:firebase/personalProfile/data/remote/ProfileRemote.dart';
 import 'package:firebase/personalProfile/edit_profile/edit_profile.dart';
@@ -25,7 +26,7 @@ class SettingsScreen extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                PersonalDetails(PersonalProfileCubit.get(context).userModel),
+                PersonalDetails(StaticValues.userModel),
                 PostsDetails(PersonalProfileCubit.get(context).postsList.length),
                 SizedBox(
                   height: 10,

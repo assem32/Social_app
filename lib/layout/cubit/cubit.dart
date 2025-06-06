@@ -1,8 +1,6 @@
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase/auth/data/model/UserModel.dart';
 import 'package:firebase/layout/cubit/states.dart';
-import 'package:firebase/feed/data/model/PostModel.dart';
 import 'package:firebase/feed/data/model/Commet.dart';
 import 'package:firebase/model/message_model.dart';
 import 'package:firebase/addPost/presentation/AddPost.dart';
@@ -12,8 +10,6 @@ import 'package:firebase/personalProfile/personalProfilePresentation/PersonalPro
 import 'package:firebase/network/local/cache_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart'as firebase_storage;
 
 class SocialCubit extends Cubit<SocialState>{
   SocialCubit():super (SocialInitialize());
@@ -59,151 +55,8 @@ class SocialCubit extends Cubit<SocialState>{
     }
   }
 
-   File ?profileImage;
-   File ?profileCover;
-   String profileValue='';
-   String coverValue='';
-  var picker=ImagePicker();
-  Future<void> getImage()async{
-    final pickedFile=await picker.pickImage(source: ImageSource.gallery);
-    if(pickedFile!=null) {
-      profileImage = File(pickedFile.path);
-      print(pickedFile.path);
-      emit(SocialProfileImagePickSuccessPost());
-    } else {
-      print('no image selected');
-      emit(SocialProfileImagePickErrorState());
-    }
-  }
-
-  Future<void> getCover()async{
-    final pickedFile=await picker.pickImage(source: ImageSource.gallery);
-    if(pickedFile!=null) {
-      profileCover = File(pickedFile.path);
-      print(pickedFile.path);
-      emit(SocialProfileCoverPickSuccessState());
-    } else {
-      print('no image selected');
-      emit(SocialProfileCoverPickErrorState());
-    }
-  }
-  
-  void uploadImage({
-    required String bio,
-    required String name,
-    required String phone
-}) {
-    emit(SocialUpdateLoadingUserState());
-    firebase_storage
-        .FirebaseStorage
-        .instance
-        .ref()
-        .child('user/${Uri
-        .file(profileImage!.path)
-        .pathSegments
-        .last}')
-        .putFile(profileImage!)
-        .then((value) {
-      value.ref.getDownloadURL().then((value) {
-        print(value);
-        updateUser(bio: bio, name: name, phone: phone,profile: value);
-       // emit(SocialProfileUploadSuccessState());
-      }).catchError((error) {
-        print(error);
-        emit(SocialProfileUploadErrorState());
-      });
-    })
-        .catchError((error) {
-      print(error);
-      emit(SocialProfileUploadErrorState());
-    });
-
-
-  }
-
-  void uploadCover({
-    required String bio,
-    required String name,
-    required String phone,
-  }) {
-    emit(SocialUpdateLoadingUserState());
-    firebase_storage
-        .FirebaseStorage
-        .instance
-        .ref()
-        .child('user/${Uri
-        .file(profileCover!.path)
-        .pathSegments
-        .last}')
-        .putFile(profileCover!)
-        .then((value) {
-      value.ref.getDownloadURL().then((value) {
-        print(value);
-        updateUser(
-          bio: bio,
-          name: name,
-          phone: phone,
-          cover: value
-        );
-        emit(SocialProfileCoverUploadSuccessState());
-      }).catchError((error) {
-        print(error);
-        emit(SocialProfileCoverUploadErrorState());
-      });
-    })
-        .catchError((error) {
-      print(error);
-      emit(SocialProfileCoverUploadErrorState());
-    });
-  }
-
-  void updateUser({
-  required String bio,
-  required String name,
-  required String phone,
-    String ?cover,
-    String ?profile,
-}){
-    UserModel umodel =UserModel(
-        name: name,
-        phone: phone,
-        bio: bio,
-        cover: cover??model?.cover,
-        image: profile??model?.image,
-        mail: model?.mail,
-        uId: model?.uId,
-        isMailVer: false
-
-
-    );
-
-    FirebaseFirestore.instance.collection('user').doc(model?.uId).update(umodel.toMap()).then((value){
-      getUserData();
-    }).catchError((error){
-      print(error.toString());
-    });
-  }
-
-  File ?imagePost;
-  Future<void> getImagePost()async{
-    final pickedFile=await picker.pickImage(source: ImageSource.gallery);
-    if(pickedFile!=null) {
-      imagePost = File(pickedFile.path);
-      print(pickedFile.path);
-      emit(SocialImagePostPickSuccessState());
-    } else {
-      print('no image selected');
-      emit(SocialImagePostPickErrorState());
-    }
-  }
-
-
-  List<PostModel>post=[];
-  List<String>postId=[];
-  List<int>likes=[];
-  List<int>comments=[];
-
-
+   
+ 
 
   void likePost(String postId){
     FirebaseFirestore
@@ -220,21 +73,13 @@ class SocialCubit extends Cubit<SocialState>{
     );
   }
 
-  // void commentPost(String postId){
-  //   FirebaseFirestore.instance.collection('post').doc(postId).collection('comments').doc(model!.uId).set(
-  //       {'comment': true}).then((value) {
-  //         emit(SocialCommentPostSuccess());
-  //   }).catchError((error){
-  //     emit(SocialCommentPostError(error.toString()));
-  //   });
-  // }
 
 //users chat
   List<UserModel> users=[];
   void getUserDataChat(){
     emit(GetUsersChatLoadingState());
-    if(users.length==0)
-     FirebaseFirestore.instance.collection('user')
+    if(users.length==0) {
+      FirebaseFirestore.instance.collection('user')
         .get()
         .then((value ){
       value.docs.forEach((element) {
@@ -246,6 +91,7 @@ class SocialCubit extends Cubit<SocialState>{
       print(error.toString());
       emit(GetUsersChatErrorState(error));
     });
+    }
   }
 
   //message
@@ -327,18 +173,7 @@ class SocialCubit extends Cubit<SocialState>{
 
     
 
-    List<PostModel> userData=[];
-    void profilePost(String ?userId){
-      FirebaseFirestore.instance
-          .collection('post').orderBy('dateTime').snapshots().listen((event) {
-            userData=[];
-            event.docs.forEach((element) {
-              if(element.data()['uId']==userId)
-                userData.add(PostModel.fromJson(element.data()));
-            });
-            emit(GetProfileSuccessState());
-      });
-    }
+ 
     
     List<UserModel>SearchUser=[];
     void searchUser(String name){

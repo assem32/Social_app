@@ -15,7 +15,7 @@ class Profile extends StatelessWidget {
     return BlocConsumer<SocialCubit,SocialState>(
       listener: (context,state){},
       builder: (context,state){
-        SocialCubit.get(context).profilePost(profileModel.uId);
+        // SocialCubit.get(context).profilePost(profileModel.uId); get posts
         return Scaffold(
           appBar: AppBar(
 
@@ -73,9 +73,9 @@ class Profile extends StatelessWidget {
                         child: Column(
                           children: [
                             Text('Posts'),
-                            Text('${SocialCubit.get(context).userData.length}',
-                              style: TextStyle(color: Colors.grey),
-                            ),
+                            // Text('${SocialCubit.get(context).userData.length}',
+                            //   style: TextStyle(color: Colors.grey),
+                            // ),
                           ],
                         ),
                       )),
@@ -120,18 +120,18 @@ class Profile extends StatelessWidget {
                     ),
                   ],
                 ),
-                Expanded(
-                  child: GridView.builder(
-                    shrinkWrap: true,
-                    itemCount: SocialCubit.get(context).userData.length,
-                    itemBuilder: (context,index)=>buildProfileImage(SocialCubit.get(context).userData[index]),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              crossAxisSpacing: 5,
-                              mainAxisSpacing: 1.5,
-                              childAspectRatio: 1)),
-                )
+                // Expanded(
+                //   child: GridView.builder(
+                //     shrinkWrap: true,
+                //     itemCount: SocialCubit.get(context).userData.length,
+                //     itemBuilder: (context,index)=>buildProfileImage(SocialCubit.get(context).userData[index]),
+                //       gridDelegate:
+                //           const SliverGridDelegateWithFixedCrossAxisCount(
+                //               crossAxisCount: 3,
+                //               crossAxisSpacing: 5,
+                //               mainAxisSpacing: 1.5,
+                //               childAspectRatio: 1)),
+                // )
               ],
             ),
           ),
