@@ -51,9 +51,8 @@ class FireBase extends StatelessWidget {
         providers: [
           BlocProvider(
               create: (BuildContext context) => SocialCubit()
-                ..getUserData()
                 ..currentIndex
-                ..getUserDataChat()),
+                ),
           BlocProvider(
             create: (BuildContext context) =>
                 FeedCubit(FeedRepo(FeedRemote()))..getPost(),
