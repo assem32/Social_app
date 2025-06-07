@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase/auth/data/model/UserModel.dart';
 import 'package:firebase/layout/cubit/states.dart';
 import 'package:firebase/feed/data/model/Commet.dart';
-import 'package:firebase/model/message_model.dart';
 import 'package:firebase/addPost/presentation/AddPost.dart';
 import 'package:firebase/feed/presentation/feed_screen.dart';
 import 'package:firebase/modules/search_screen/search.dart';
@@ -11,178 +10,85 @@ import 'package:firebase/network/local/cache_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SocialCubit extends Cubit<SocialState>{
-  SocialCubit():super (SocialInitialize());
-  static SocialCubit get(context)=> BlocProvider.of(context);
-  UserModel ?model;
-  void getUserData(){
+class SocialCubit extends Cubit<SocialState> {
+  SocialCubit() : super(SocialInitialize());
+  static SocialCubit get(context) => BlocProvider.of(context);
+  UserModel? model;
+  void getUserData() {
     emit(SocialLoading());
-    FirebaseFirestore.instance.collection('user')
-        .doc(uId)
-        .get()
-        .then((value ){
-          print(value.data());
-          model= UserModel.fromJson(value.data());
-          emit(SocialSuccess());
-    } ).catchError((error){
+    FirebaseFirestore.instance.collection('user').doc(uId).get().then((value) {
+      print(value.data());
+      model = UserModel.fromJson(value.data());
+      emit(SocialSuccess());
+    }).catchError((error) {
       print(error.toString());
       emit(SocialError(error));
     });
   }
 
-  int currentIndex=0;
-  List<Widget> screen=[
+  int currentIndex = 0;
+  List<Widget> screen = [
     FeedScreen(),
     SearchScreen(),
     AddPost(),
     SettingsScreen(),
   ];
-  List<String> title=[
+  List<String> title = [
     'Home',
     'Search',
     'add',
     'Profile',
   ];
-  void changeNav(int index){
-    if(index==1)
-      getUserDataChat();
-    if(index==2)
-      emit(SocialAddPost());
-    else {
+  void changeNav(int index) {
+    
       currentIndex = index;
       print(index);
       emit(SocialNav());
-    }
   }
 
-   
- 
-
-  void likePost(String postId){
-    FirebaseFirestore
-        .instance
+  void likePost(String postId) {
+    FirebaseFirestore.instance
         .collection('post')
         .doc(postId)
         .collection('likes')
-        .doc(model!.uId).set({'likes': true})
-    .then((value){
-      emit(SocialLikePostSuccess());
-    }).catchError((error){
-     emit(SocialLikePostError(error.toString()));
-    }
-    );
-  }
-
-
-//users chat
-  List<UserModel> users=[];
-  void getUserDataChat(){
-    emit(GetUsersChatLoadingState());
-    if(users.length==0) {
-      FirebaseFirestore.instance.collection('user')
-        .get()
-        .then((value ){
-      value.docs.forEach((element) {
-        if(element.data()['uId']!=model!.uId)
-          users.add(UserModel.fromJson(element.data()));
-      });
-      emit(GetUsersChatSuccessState());
-    } ).catchError((error){
-      print(error.toString());
-      emit(GetUsersChatErrorState(error));
-    });
-    }
-  }
-
-  //message
-  void sendMessage({
-    required receiverId,
-    required dateTime,
-    required text
-  }){
-    Message mModel= Message(
-        senderId: model?.uId,
-        receiverId: receiverId,
-        dateTime: dateTime,
-        text:text
-    );
-    //sender screen when send
-    FirebaseFirestore.instance.collection('user')
         .doc(model!.uId)
-        .collection('chats')
-        .doc(receiverId)
-        .collection('message')
-        .add(mModel.toMap()).then((value){
-      emit(SendMassageSuccessState());
-    }).catchError((error){
-      emit(SendMassageErrorState());
-    });
-
-//receiver screen when send
-    FirebaseFirestore.instance.collection('user')
-        .doc(receiverId)
-        .collection('chats')
-        .doc(model?.uId)
-        .collection('message')
-        .add(mModel.toMap()).then((value){
-      emit(SendMassageSuccessState());
-    }).catchError((error){
-      emit(SendMassageErrorState());
+        .set({'likes': true}).then((value) {
+      emit(SocialLikePostSuccess());
+    }).catchError((error) {
+      emit(SocialLikePostError(error.toString()));
     });
   }
 
-  List<Message> message=[];
-  void getMessages({
-    required String ?receiverId,
-  }) {
-    FirebaseFirestore.instance
-        .collection('user')
-        .doc(model?.uId)
-        .collection('chats')
-        .doc(receiverId)
-        .collection('message')
-        .orderBy('dateTime')
-        .snapshots()
-        .listen((event) {
-      message = [];
 
-      event.docs.forEach((element) {
-        message.add(Message.fromJson(element.data()));
-      });
-
-      emit(GetMassageSuccessState());
-        });
-  }
-  void createComment(String text,String postId){
-    CommentModel cModel=CommentModel(
-        name: model?.name,
-        uId: model?.uId,
-        image: model?.image,
-        bio: model?.bio,
-        //dateTime: dateTime,
-        text: text,
+  void createComment(String text, String postId) {
+    CommentModel cModel = CommentModel(
+      name: model?.name,
+      uId: model?.uId,
+      image: model?.image,
+      bio: model?.bio,
+      //dateTime: dateTime,
+      text: text,
     );
     FirebaseFirestore.instance
-    .collection('post').doc(postId).collection('comments').add(cModel.toMap()).then((value) {
+        .collection('post')
+        .doc(postId)
+        .collection('comments')
+        .add(cModel.toMap())
+        .then((value) {
       emit(CreateCommentSuccessState());
-    }).catchError((error){
+    }).catchError((error) {
       emit(CreateCommentErrorState());
     });
+  }
 
-    }
-
-    
-
- 
-    
-    List<UserModel>SearchUser=[];
-    void searchUser(String name){
-      FirebaseFirestore.instance.collection('user').get().then((value) {
-        value.docs.forEach((element) {
-          if(element.data()['name']==name)
-            SearchUser.add(UserModel.fromJson(element.data()));
-          emit(GetSearchSuccessState());
-        });
-      }).catchError((error){});
-    }
+  List<UserModel> SearchUser = [];
+  void searchUser(String name) {
+    FirebaseFirestore.instance.collection('user').get().then((value) {
+      value.docs.forEach((element) {
+        if (element.data()['name'] == name)
+          SearchUser.add(UserModel.fromJson(element.data()));
+        emit(GetSearchSuccessState());
+      });
+    }).catchError((error) {});
+  }
 }
